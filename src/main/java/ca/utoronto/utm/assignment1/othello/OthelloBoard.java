@@ -9,7 +9,7 @@ package ca.utoronto.utm.assignment1.othello;
  * location (the opposite players tokens are flipped).
  * 
  * Othello makes use of the OthelloBoard.
- * 
+ * z
  * @author arnold
  *
  */
@@ -34,7 +34,8 @@ public class OthelloBoard {
 
 	public int getDimension() {
 		return this.dim;
-	}
+	}{
+    }
 
 	/**
 	 * 
@@ -42,8 +43,12 @@ public class OthelloBoard {
 	 * @return P2 or P1, the opposite of player
 	 */
 	public static char otherPlayer(char player) {
-		return EMPTY;
-	}
+        if(player==P1){
+            return P2;
+        } else{
+            return P1;
+        }
+    }
 
 	/**
 	 * 
@@ -52,7 +57,11 @@ public class OthelloBoard {
 	 * @return P1,P2 or EMPTY, EMPTY is returned for an invalid (row,col)
 	 */
 	public char get(int row, int col) {
-		return EMPTY;
+		if(validCoordinate(row, col)) {
+            return this.board[row][col];
+        } else{
+            return EMPTY;
+        }
 	}
 
 	/**
@@ -63,7 +72,11 @@ public class OthelloBoard {
 	 *         a position on the board.
 	 */
 	private boolean validCoordinate(int row, int col) {
-		return true;
+		if(row<0 || row>this.dim-1 || col<0 || col>this.dim-1){
+            return false;
+        } else{
+            return true;
+        }
 	}
 
 	/**
@@ -85,7 +98,27 @@ public class OthelloBoard {
 	 *         alternation
 	 */
 	private char alternation(int row, int col, int drow, int dcol) {
-		return EMPTY;
+		if ((row == (this.dim-1) && drow==1) ||
+                (row== 0 && drow== -1) ||
+                (col == (this.dim-1) && dcol==1) ||
+                (col == 0  && dcol==-1) ||
+                (row==0 && col==0))
+        {
+            return EMPTY;
+        }
+        char thisPlayer = get(row,col);
+        char oppPlayer = otherPlayer(thisPlayer);
+        int currRow = row+ drow;
+        int currCol = col+ dcol;
+        while(validCoordinate(currRow, currCol)){
+            if(get(currRow,currCol)==oppPlayer){
+                return oppPlayer;
+            } else{
+                currRow += drow;
+                currCol += dcol;
+            }
+        }
+        return EMPTY;
 	}
 
 	/**
@@ -104,7 +137,20 @@ public class OthelloBoard {
 	 *         board is reached before seeing a player token.
 	 */
 	private int flip(int row, int col, int drow, int dcol, char player) {
-		return -1;
+        char thisPlayer = alternation(row,col,drow,dcol); // player that can flip
+        if((thisPlayer==EMPTY ||
+            thisPlayer!=player)  {
+            return -1;
+        }
+        char oppPlayer = otherPlayer(player);
+        int currRow = row;
+        int currCol = col;
+        while(validCoordinate(currRow,currCol) && get(currRow,currCol)==oppPlayer){
+            board[currRow][currCol] = player;
+            currRow += drow;
+            currCol += dcol;
+        }
+
 	}
 
 	/**
@@ -117,7 +163,7 @@ public class OthelloBoard {
 	 * @return P1,P2,EMPTY
 	 */
 	private char hasMove(int row, int col, int drow, int dcol) {
-		return EMPTY;
+		return alternation(row+=drow,col+=dcol,drow,dcol);
 	}
 
 	/**
@@ -126,7 +172,18 @@ public class OthelloBoard {
 	 *         neither do.
 	 */
 	public char hasMove() {
-		return EMPTY;
+        boolean p1 = false; //X
+        boolean p2 = false; //Y
+		for (int row = 0; row < this.dim; row++) {
+            for (int col = 0; col < this.dim; col++) {
+                char rowLeft = hasMove(row, col, 0, -1);
+                char rowRight = hasMove(row, col, 0, 1);
+                char colUp = hasMove(row, col, -1, 0);
+                char colDown = hasMove(row, col, 1, 0);
+
+                }
+            }
+
 	}
 
 	/**
@@ -153,6 +210,13 @@ public class OthelloBoard {
 	 */
 	public int getCount(char player) {
 		int count = 0;
+        for(int row = 0; row < this.dim; row++){
+            for(int col = 0; col < this.dim; col++){
+                if(get(row,col)==player){
+                    count++;
+                }
+            }
+        }
 		return count;
 	}
 
