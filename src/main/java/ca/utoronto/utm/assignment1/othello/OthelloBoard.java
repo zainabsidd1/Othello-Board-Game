@@ -45,8 +45,10 @@ public class OthelloBoard {
 	public static char otherPlayer(char player) {
         if(player==P1){
             return P2;
-        } else{
+        } else if(player==P2){
             return P1;
+        }else{
+            return EMPTY;
         }
     }
 
@@ -58,7 +60,7 @@ public class OthelloBoard {
 	 */
 	public char get(int row, int col) {
 		if(validCoordinate(row, col)) {
-            return this.board[row][col];
+            return board[row][col];
         } else{
             return EMPTY;
         }
@@ -98,28 +100,31 @@ public class OthelloBoard {
 	 *         alternation
 	 */
 	private char alternation(int row, int col, int drow, int dcol) {
-		if ((row == (this.dim-1) && drow==1) ||
-                (row== 0 && drow== -1) ||
-                (col == (this.dim-1) && dcol==1) ||
-                (col == 0  && dcol==-1) ||
-                (row==0 && col==0))
-        {
+		if ((drow==0 && dcol==0) ||
+                (!validCoordinate(row, col))||
+                get(row,col)==EMPTY) {
             return EMPTY;
         }
         char thisPlayer = get(row,col);
         char oppPlayer = otherPlayer(thisPlayer);
-        int currRow = row+ drow;
-        int currCol = col+ dcol;
-        while(validCoordinate(currRow, currCol)){
-            if(get(currRow,currCol)==oppPlayer){
+        int currRow = row+drow;
+        int currCol = col+dcol;
+        boolean sawOpp = false;
+        while(validCoordinate(currRow, currCol) && get(currRow, currCol) != EMPTY){
+            char curr = get(currRow, currCol);
+            if(curr==oppPlayer){
                 return oppPlayer;
-            } else{
-                currRow += drow;
-                currCol += dcol;
+            } else if (curr==thisPlayer){
+                currRow = currRow + drow;
+                currCol = currCol + dcol;
             }
         }
         return EMPTY;
 	}
+
+    public char testAlt(int row, int col, int drow, int dcol) {
+        return alternation(row,col,drow,dcol);
+    }
 
 	/**
 	 * flip all other player tokens to player, starting at (row,col) in direction
@@ -137,19 +142,37 @@ public class OthelloBoard {
 	 *         board is reached before seeing a player token.
 	 */
 	private int flip(int row, int col, int drow, int dcol, char player) {
-        char thisPlayer = alternation(row,col,drow,dcol); // player that can flip
-        if((thisPlayer==EMPTY ||
-            thisPlayer!=player)  {
-            return -1;
-        }
+
         char oppPlayer = otherPlayer(player);
         int currRow = row;
         int currCol = col;
-        while(validCoordinate(currRow,currCol) && get(currRow,currCol)==oppPlayer){
-            board[currRow][currCol] = player;
-            currRow += drow;
-            currCol += dcol;
+        int count = 0;
+        boolean sawPlayer = false;
+        while(validCoordinate(currRow, currCol) && get(currRow, currCol) != EMPTY){
+            if (get(currRow,currCol)==oppPlayer){
+                count++;
+                currRow += drow;
+                currCol += dcol;
+            } else if (get(currRow,currCol)==player){
+                sawPlayer = true;
+                break;
+            } else{
+                break;
+            }
         }
+        if(!sawPlayer){
+            return -1;
+        } else if(count==0){
+            return 0;
+        }
+        int thisRow = row;
+        int thisCol = col;
+        for(int i=0;i<count;i++){
+            board[thisRow][thisCol] = player;
+            thisRow += drow;
+            thisCol += dcol;
+        }
+        return count;
 
 	}
 
@@ -163,7 +186,26 @@ public class OthelloBoard {
 	 * @return P1,P2,EMPTY
 	 */
 	private char hasMove(int row, int col, int drow, int dcol) {
-		return alternation(row+=drow,col+=dcol,drow,dcol);
+        if(!validCoordinate(row, col)||get(row,col)!=EMPTY){
+            return EMPTY;
+        }
+        int currRow = row+drow;
+        int currCol = col+dcol;
+        if(!validCoordinate(currRow, currCol) || get(currRow,currCol)==EMPTY){
+            return EMPTY;
+        }
+        char oppPlayer = get(currRow,currCol); //beside empty space
+        char thisPlayer = otherPlayer(oppPlayer); //opposite
+        boolean sawPlayer = false;
+		while(validCoordinate(currRow, currCol) && get(currRow,currCol)==oppPlayer){
+                currRow+=drow;
+                currCol+=dcol;
+        }
+        if(validCoordinate(currRow,currCol) && get(currRow,currCol)==thisPlayer){
+            return thisPlayer;
+        } else{
+            return EMPTY;
+        }
 	}
 
 	/**
@@ -174,15 +216,29 @@ public class OthelloBoard {
 	public char hasMove() {
         boolean p1 = false; //X
         boolean p2 = false; //Y
-		for (int row = 0; row < this.dim; row++) {
-            for (int col = 0; col < this.dim; col++) {
-                char rowLeft = hasMove(row, col, 0, -1);
-                char rowRight = hasMove(row, col, 0, 1);
-                char colUp = hasMove(row, col, -1, 0);
-                char colDown = hasMove(row, col, 1, 0);
+		for (int row = 0; row < this.dim; row++) { // each row
+            for (int col = 0; col < this.dim; col++) { // each column
 
+                for (int r=-1;r<=1;r++){ // each row direction
+                    for (int c=-1;c<=1;c++){ // each col directions
+                        char res = hasMove(row, col, r, c);
+                        if(res==P1){
+                            p1 = true;
+                        } else if(res==P2){
+                            p2 = true;
+                        }
+                    }
                 }
             }
+        }
+        if(p1&&p2){
+            return BOTH;
+        } else if(p1){
+            return P1;
+        } else if (p2){
+            return P2;
+        }
+        return EMPTY;
 
 	}
 
@@ -199,8 +255,27 @@ public class OthelloBoard {
 	public boolean move(int row, int col, char player) {
 		// HINT: Use some of the above helper methods to get this methods
 		// job done!!
-
-		return true;
+        if(!validCoordinate(row, col) || get(row,col)!=EMPTY){
+            return false;
+        }
+        boolean moved = false;
+        for(int r=-1;r<=1;r++){
+            for(int c=-1;c<=1;c++){
+                if (!(r==0 && c==0)) {
+                    char res = hasMove(row, col, r, c);
+                    if (res == player) {
+                        int count = flip(row + r, col + c, r, c, player);
+                        if (count > 0) {
+                            moved = true;
+                        }
+                    }
+                }
+            }
+        }
+        if (moved){
+            board[row][col] = player;
+        }
+		return moved;
 	}
 
 	/**
@@ -210,8 +285,8 @@ public class OthelloBoard {
 	 */
 	public int getCount(char player) {
 		int count = 0;
-        for(int row = 0; row < this.dim; row++){
-            for(int col = 0; col < this.dim; col++){
+        for(int row = 0; row < dim; row++){
+            for(int col = 0; col < dim; col++){
                 if(get(row,col)==player){
                     count++;
                 }

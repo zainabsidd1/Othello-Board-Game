@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.*;
 
+
 public class OthelloBoardTest {
     OthelloBoard board;
     Move[] moves = {new Move(2, 4), new Move(2, 5), new Move(2, 6), new Move(2, 3), new Move(2, 2), new Move(3, 2),
@@ -64,6 +65,14 @@ public class OthelloBoardTest {
         // X:7 O:2  O moves next
 
     }
+
+    @Test
+    public void testBasic(){
+        OthelloBoard b1 = new OthelloBoard(8);
+        char x = b1.testAlt(3,3,0,1);
+        assertEquals('O',x);
+    }
+
 
     @Test
     public void testOthelloBoard() {
