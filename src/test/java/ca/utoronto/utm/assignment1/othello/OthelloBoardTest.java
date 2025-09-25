@@ -66,13 +66,6 @@ public class OthelloBoardTest {
 
     }
 
-    @Test
-    public void testBasic(){
-        OthelloBoard b1 = new OthelloBoard(8);
-        char x = b1.testAlt(3,3,0,1);
-        assertEquals('O',x);
-    }
-
 
     @Test
     public void testOthelloBoard() {

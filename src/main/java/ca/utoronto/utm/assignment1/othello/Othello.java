@@ -33,7 +33,6 @@ public class Othello {
             return EMPTY;
         }
         return whosTurn;
-
 	}
 
 	/**
@@ -55,7 +54,6 @@ public class Othello {
             }
             numMoves++;
         }
-
         return result;
 	}
 
@@ -92,12 +90,8 @@ public class Othello {
 	 * @return whether the game is over (no player can move next)
 	 */
 	public boolean isGameOver() {
-		int totalTokens = 0;
-        totalTokens = getCount(P1)+getCount(P2);
-        if (totalTokens==64 || board.hasMove()==EMPTY) {
-            return true;
-        }
-        return false;
+        int totalTokens = getCount(P1)+getCount(P2);
+        return (totalTokens==64 || board.hasMove()==EMPTY);
 
 	}
 
