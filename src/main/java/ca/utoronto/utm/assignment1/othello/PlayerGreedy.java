@@ -22,7 +22,43 @@ package ca.utoronto.utm.assignment1.othello;
  */
 
 public class PlayerGreedy {
+
+    private Othello othello;
+    private char player;
+    private int dim = 8;
+
+    public PlayerGreedy(Othello othello, char player) {
+        this.othello = othello;
+        this.player = player;
+    }
+
 	public Move getMove() {
-		return null;
-	}
+
+        int maxTokens = 0;
+        int maxRow = -1;
+        int maxCol = -1;
+        for (int row = 0; row < dim; row++) { // each row
+            for (int col = 0; col < dim; col++) { // each column
+                if (othello.board.get(row,col)!=OthelloBoard.EMPTY) continue;
+                OthelloBoard thisBoard = othello.getBoard(); // new board copy
+                if(thisBoard.move(row,col, player)){
+                    int currTokens = thisBoard.getCount(player);
+                    if (currTokens > maxTokens || (currTokens == maxTokens && row < maxRow) ||
+                                (currTokens == maxTokens && row == maxRow && col < maxCol)
+                        ) {
+                            maxTokens = currTokens;
+                            maxRow = row;
+                            maxCol = col;
+                        }
+                }
+            }
+        }
+        if(maxTokens == 0 ||maxRow<0 || maxCol<0) return null;
+        return new Move(maxRow,maxCol);
+    }
+
+
 }
+
+
+

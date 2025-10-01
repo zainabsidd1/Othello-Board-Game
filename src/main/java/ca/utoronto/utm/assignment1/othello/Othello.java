@@ -21,7 +21,7 @@ public class Othello {
 	private char whosTurn = OthelloBoard.P1; // P1 moves first!
 	private int numMoves = 0;
     public static final char EMPTY = ' ', P1 = 'X', P2 = 'O', BOTH = 'B';
-    private OthelloBoard board = new OthelloBoard(DIMENSION);
+    public OthelloBoard board = new OthelloBoard(DIMENSION);
 
 	/**
 	 * return P1,P2 or EMPTY depending on who moves next.
@@ -56,6 +56,25 @@ public class Othello {
         }
         return result;
 	}
+
+    public void forfeitMove(char player){
+        if(player==P1){
+            whosTurn = P2;
+        } else{
+            whosTurn = P1;}
+
+    }
+
+    public OthelloBoard getBoard() {
+        OthelloBoard newBoard = new OthelloBoard(DIMENSION);
+        for(int r=0;r<DIMENSION;r++){
+            for(int  c=0;c<DIMENSION;c++){
+                newBoard.getBoard()[r][c] = this.board.get(r,c);
+            }
+        }
+        return newBoard;
+    }
+
 
 	/**
 	 * 
@@ -102,6 +121,8 @@ public class Othello {
 	public String getBoardString() {
 		return board.toString();
 	}
+
+
 
 	/**
 	 * run this to test the current class. We play a completely random game. DO NOT

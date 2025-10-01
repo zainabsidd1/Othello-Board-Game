@@ -19,12 +19,15 @@ public class PlayerHuman {
 	private Othello othello;
 	private char player;
 
+    /** Initialize an Othello game for this player
+    */
 	public PlayerHuman(Othello othello, char player) {
 		
 		this.othello = othello;
 		this.player = player;
 	}
 
+    // Get the players row and column inputs and return a Move object
 	public Move getMove() {
 		
 		int row = getMove("row: ");
@@ -32,13 +35,19 @@ public class PlayerHuman {
 		return new Move(row, col);
 	}
 
+    // Gets a valid move from the user.
+    // If the move is invalid, print the error message
 	private int getMove(String message) {
-		
 		int move, lower = 0, upper = 7;
 		while (true) {
 			try {
 				System.out.print(message);
 				String line = PlayerHuman.stdin.readLine();
+
+                if (line==null){
+                    return -1;
+                }
+
 				move = Integer.parseInt(line);
 				if (lower <= move && move <= upper) {
 					return move;
@@ -47,11 +56,12 @@ public class PlayerHuman {
 				}
 			} catch (IOException e) {
 				System.out.println(INVALID_INPUT_MESSAGE);
-				break;
+				return -1;
 			} catch (NumberFormatException e) {
 				System.out.println(INVALID_INPUT_MESSAGE);
+                return -1;
 			}
 		}
-		return -1;
+
 	}
 }

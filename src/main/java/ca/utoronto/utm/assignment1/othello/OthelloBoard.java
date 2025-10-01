@@ -32,9 +32,15 @@ public class OthelloBoard {
 		this.board[mid][mid - 1] = this.board[mid - 1][mid] = P2;
 	}
 
+
+
 	public int getDimension() {
 		return this.dim;
 	}{
+    }
+
+    public char[][] getBoard(){
+        return this.board;
     }
 
 	/**
@@ -47,6 +53,8 @@ public class OthelloBoard {
         if (player == P2) return P1;
         return EMPTY;
     }
+
+
 
 
 	/**
@@ -114,6 +122,7 @@ public class OthelloBoard {
         return EMPTY;
 	}
 
+
 	/**
 	 * flip all other player tokens to player, starting at (row,col) in direction
 	 * (drow, dcol). Example: If (drow,dcol)=(0,1) and player==O then XXXO will
@@ -145,6 +154,10 @@ public class OthelloBoard {
         }
         return numFlipped;
 	}
+
+    public int flip2(int row, int col, int drow, int dcol, char player) {
+        return flip(row,col,drow,dcol,player);
+    }
 
 	/**
 	 * Return which player has a move (row,col) in direction (drow,dcol).
@@ -215,7 +228,7 @@ public class OthelloBoard {
 	public boolean move(int row, int col, char player) {
 		// HINT: Use some of the above helper methods to get this methods
 		// job done!!
-        if(!validCoordinate(row, col) || get(row,col)!=EMPTY){
+        if(!validCoordinate(row, col) || get(row,col)!=EMPTY || row<0 || col<0){
             return false;
         }
         boolean moved = false;
@@ -251,6 +264,7 @@ public class OthelloBoard {
         }
 		return count;
 	}
+
 
 	/**
 	 * @return a string representation of this, just the play area, with no
