@@ -21,6 +21,12 @@ public class OthelloControllerHumanVSGreedy {
     protected Othello othello;
     PlayerHuman player1;
     PlayerGreedy player2;
+
+
+    /**
+     * Constructs a new OthelloController with a new Othello game, ready to play
+     * with ond user at the console.
+     */
     public OthelloControllerHumanVSGreedy(){
         this.othello = new Othello();
         this.player1 = new PlayerHuman(this.othello, OthelloBoard.P1); // X

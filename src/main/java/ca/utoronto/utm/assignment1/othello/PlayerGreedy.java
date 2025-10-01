@@ -32,6 +32,11 @@ public class PlayerGreedy {
         this.player = player;
     }
 
+    /**
+     *
+     * @return Move object representing the move which flips the most tokens
+     */
+
 	public Move getMove() {
 
         int maxTokens = 0;

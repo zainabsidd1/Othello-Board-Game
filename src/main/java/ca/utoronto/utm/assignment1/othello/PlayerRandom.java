@@ -14,8 +14,33 @@ import java.util.Random;
 public class PlayerRandom {
 	
 	private Random rand = new Random();
+    private Othello othello;
+    private char player;
+    private int dim = 8;
+
+    public PlayerRandom(Othello othello, char player) {
+        this.othello = othello;
+        this.player = player;
+    }
+
+    /**
+     *
+     * @return a random move from the list of possible moves
+     */
 
 	public Move getMove() {
-		return null;
+        ArrayList<Move> moves = new ArrayList<>();
+
+        for(int row = 0; row < dim; row++) {
+            for(int col = 0; col < dim; col++) {
+                if(othello.board.get(row,col)!=OthelloBoard.EMPTY) continue;
+                OthelloBoard thisBoard = othello.getBoard(); // new board copy
+                if (thisBoard.move(row,col,player)) {
+                    moves.add(new Move(row,col));
+                }
+            }
+        }
+        if (moves.isEmpty()) return null;
+        return moves.get(rand.nextInt(moves.size()));
 	}
 }

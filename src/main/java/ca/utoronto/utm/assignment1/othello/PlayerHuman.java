@@ -27,7 +27,10 @@ public class PlayerHuman {
 		this.player = player;
 	}
 
-    // Get the players row and column inputs and return a Move object
+    /**
+     *
+     * @return the Move that this player will perform.
+     */
 	public Move getMove() {
 		
 		int row = getMove("row: ");
@@ -37,6 +40,12 @@ public class PlayerHuman {
 
     // Gets a valid move from the user.
     // If the move is invalid, print the error message
+
+    /**
+     *
+     * @param message receives the row/col input from the user
+     * @return the row/col entered by the user
+     */
 	private int getMove(String message) {
 		int move, lower = 0, upper = 7;
 		while (true) {
@@ -44,10 +53,7 @@ public class PlayerHuman {
 				System.out.print(message);
 				String line = PlayerHuman.stdin.readLine();
 
-                if (line==null){
-                    return -1;
-                }
-
+                if (line==null) return -1;
 				move = Integer.parseInt(line);
 				if (lower <= move && move <= upper) {
 					return move;

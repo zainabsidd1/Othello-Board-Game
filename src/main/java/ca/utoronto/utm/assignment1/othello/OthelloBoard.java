@@ -155,9 +155,7 @@ public class OthelloBoard {
         return numFlipped;
 	}
 
-    public int flip2(int row, int col, int drow, int dcol, char player) {
-        return flip(row,col,drow,dcol,player);
-    }
+
 
 	/**
 	 * Return which player has a move (row,col) in direction (drow,dcol).
