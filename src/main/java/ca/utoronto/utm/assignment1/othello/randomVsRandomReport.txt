@@ -1,21 +1,43 @@
 RandomVSRandom Report
 
 1) What is your conclusion, does the first or
-second player have some advantage, at least for a random strategy? 
+second player have some advantage, at least for a random strategy?
+
+
+When simulating 10,000 games of Random VS Random, the probability that Player 1 wins was 0.4551, and the probability that Player 2 wins was 0.5066.
+From these results, we can see that both probabilities differ by approximately 0.0515.
+Thus, although the difference is not large enough to claim a strong effect, the results suggest that Player 2 may have a slight advantage in the RandomVSRandom strategy.
+
 
 2) Watch https://www.youtube.com/watch?v=Iq9DzN6mvYA
 
 3) Briefly write your thoughts on the above video below:
 
-4) H0 is 
+In the video, the idea of shuffling was introduced to test whether patterns in data are due to chance or a true effect.
+This relates to our simulation, where our null hypothesis assumes that the probabilities of P1 and P2 winning are equal.
+Shuffling works by swapping the labels of the experiment, rearranging the data, and computing the mean.
+By simulating 10,000 random games, we can approximate the probability distribution under H0.
+If our observed difference of 0.0515 is common within this distribution, we can accept H0; if it is rare, we reject H0 and accept Ha.
 
-5) Ha is 
+
+4) H0 is the probability of P1 winning is equal to the probability of P2 winning.
+
+5) Ha is the probability of P1 winning is less than the probability of P2 winning.
 
 6) Choose one of the following and delete the other:
-   My experimental results support H0, so they do not support Ha
    My experimental results do not support H0, so they support Ha
 
 7) As in the video, use either math or code (add a Java Class) to argue for or against H0
+
+We will use math to calculate the p-value of our results.
+Probability P1 wins = p^ =0.4551
+P0 (assumed under H0) = 0.5
+Z = (p^-p0)/(sqrt(p0(1-p0))/n)
+Z = (0.4551-0.5)/(sqrt(0.5(1-0.5))/10000)
+Z = -8.98
+This yields a p-value of p<0.00001. This means our observed difference is unlikely, and so we reject H0 and accept Ha.
+Therefore, we can conclude that Player 2 did have an advantage in the Random VS Random strategy.
+
 
 References: 
 https://www.thoughtco.com/null-hypothesis-vs-alternative-hypothesis-3126413
