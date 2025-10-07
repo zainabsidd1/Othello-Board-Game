@@ -10,31 +10,24 @@ import java.io.InputStreamReader;
  * @author arnold
  *
  */
-public class PlayerHuman {
+public class PlayerHuman extends Player {
 	
 	private static final String INVALID_INPUT_MESSAGE = "Invalid number, please enter 1-8";
 	private static final String IO_ERROR_MESSAGE = "I/O Error";
 	private static BufferedReader stdin = new BufferedReader(new InputStreamReader(System.in));
 
-	private Othello othello;
-	private char player;
 
     /** Initialize an Othello game for this player
     */
 	public PlayerHuman(Othello othello, char player) {
-		
-		this.othello = othello;
-		this.player = player;
-	}
+		super(othello, player);
+    }
 
-    /**
-     *
-     * @return the Move that this player will perform.
-     */
+    @Override
 	public Move getMove() {
 		
-		int row = getMove("row: ");
-		int col = getMove("col: ");
+		int row = getInput("row: ");
+		int col = getInput("col: ");
 		return new Move(row, col);
 	}
 
@@ -46,7 +39,7 @@ public class PlayerHuman {
      * @param message receives the row/col input from the user
      * @return the row/col entered by the user
      */
-	private int getMove(String message) {
+	private int getInput(String message) {
 		int move, lower = 0, upper = 7;
 		while (true) {
 			try {

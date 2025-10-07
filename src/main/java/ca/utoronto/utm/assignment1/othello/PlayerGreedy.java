@@ -21,22 +21,20 @@ package ca.utoronto.utm.assignment1.othello;
  *
  */
 
-public class PlayerGreedy {
+public class PlayerGreedy extends Player {
 
-    private Othello othello;
-    private char player;
-    private int dim = 8;
+
+    private static final int dim = 8;
 
     public PlayerGreedy(Othello othello, char player) {
-        this.othello = othello;
-        this.player = player;
+        super(othello, player);
     }
 
     /**
      *
      * @return Move object representing the move which flips the most tokens
      */
-
+    @Override
 	public Move getMove() {
 
         int maxTokens = 0;

@@ -19,6 +19,10 @@ public class OthelloBoard {
 	private int dim = 8;
 	private char[][] board;
 
+
+    /** Initialize an Othello Board for this game. Each space is EMPTY except for the middle
+     * 4 spots.
+     */
 	public OthelloBoard(int dim) {
 		this.dim = dim;
 		board = new char[this.dim][this.dim];
@@ -33,12 +37,19 @@ public class OthelloBoard {
 	}
 
 
-
+    /**
+     *
+     * @return the dimension of the board
+     */
 	public int getDimension() {
 		return this.dim;
 	}{
     }
 
+    /**
+     *
+     * @return the current board
+     */
     public char[][] getBoard(){
         return this.board;
     }
@@ -66,9 +77,9 @@ public class OthelloBoard {
 	public char get(int row, int col) {
 		if(validCoordinate(row, col)) {
             return board[row][col];
-        } else{
-            return EMPTY;
         }
+        return EMPTY;
+
 	}
 
 	/**
@@ -230,10 +241,10 @@ public class OthelloBoard {
             return false;
         }
         boolean moved = false;
-        for(int r=-1;r<=1;r++){
-            for(int c=-1;c<=1;c++){
+        for(int r=-1;r<=1;r++){ // each row
+            for(int c=-1;c<=1;c++){ // each column
                 if (r==0 && c==0) continue;
-                if (hasMove(row, col, r, c) != player) continue;
+                if (hasMove(row, col, r, c) != player) continue; // check with every direction
                 int numFlipped = flip(row + r, col + c, r, c, player);
                 if (numFlipped > 0) {
                     moved = true;

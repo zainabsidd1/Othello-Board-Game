@@ -36,8 +36,12 @@ public class OthelloControllerHumanVSHuman {
 			if (whosTurn == OthelloBoard.P2)
 				move = player2.getMove();
 
-			this.reportMove(whosTurn, move);
-			othello.move(move.getRow(), move.getCol());
+            if (move == null || move.getRow() < 0 || move.getCol() < 0) {
+                break;
+            }
+
+            this.reportMove(whosTurn, move);
+            othello.move(move.getRow(), move.getCol());
 		}
 		this.reportFinal();
 	}

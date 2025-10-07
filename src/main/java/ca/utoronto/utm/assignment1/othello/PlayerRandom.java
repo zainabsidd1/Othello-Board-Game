@@ -11,23 +11,21 @@ import java.util.Random;
  * @author arnold
  *
  */
-public class PlayerRandom {
+public class PlayerRandom extends Player{
 	
 	private Random rand = new Random();
-    private Othello othello;
-    private char player;
-    private int dim = 8;
+
+    private static final int dim = 8;
 
     public PlayerRandom(Othello othello, char player) {
-        this.othello = othello;
-        this.player = player;
+        super(othello, player);
     }
 
     /**
-     *
-     * @return a random move from the list of possible moves
+     * Chooses a random move from a list of all possible moves
+     * @return a random Move or null if there are no valid moves
      */
-
+    @Override
 	public Move getMove() {
         ArrayList<Move> moves = new ArrayList<>();
 
