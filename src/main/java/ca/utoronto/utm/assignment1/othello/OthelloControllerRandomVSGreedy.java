@@ -7,23 +7,20 @@ package ca.utoronto.utm.assignment1.othello;
  * @author arnold
  *
  */
-public class OthelloControllerRandomVSGreedy {
+public class OthelloControllerRandomVSGreedy extends OthelloController {
 
-    protected Othello othello;
-    PlayerRandom player1; // X
-    PlayerGreedy player2; // O
 
     /**
      * Constructs a new OthelloController with a new Othello game, ready to play
      * with a Random player and a Greedy Player. There are no users on the console.
      */
     public OthelloControllerRandomVSGreedy() {
-        this.othello = new Othello();
-        this.player1 = new PlayerRandom(this.othello, OthelloBoard.P1);
-        this.player2 = new PlayerGreedy(this.othello, OthelloBoard.P2);
+        super();
+        this.player1 = new PlayerRandom(this.othello, OthelloBoard.P1); // X
+        this.player2 = new PlayerGreedy(this.othello, OthelloBoard.P2); // O
     }
 
-
+    @Override
     public void play(){
 
         while (!othello.isGameOver()) {
@@ -43,7 +40,6 @@ public class OthelloControllerRandomVSGreedy {
             }
         }
     }
-
 
 
     /**

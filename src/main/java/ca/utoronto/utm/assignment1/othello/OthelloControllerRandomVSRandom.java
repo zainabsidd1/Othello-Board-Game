@@ -14,22 +14,20 @@ package ca.utoronto.utm.assignment1.othello;
  * @author arnold
  *
  */
-public class OthelloControllerRandomVSRandom {
-    protected Othello othello;
-    PlayerRandom player1; // X
-    PlayerRandom player2;
+public class OthelloControllerRandomVSRandom extends OthelloController {
 
     /**
      * Constructs a new OthelloController with a new Othello game, ready to play
      * with two Random Players. There are no users on the console.
      */
     public OthelloControllerRandomVSRandom() {
-        this.othello = new Othello();
+        super();
         this.player1 = new PlayerRandom(this.othello, OthelloBoard.P1);
         this.player2 = new PlayerRandom(this.othello, OthelloBoard.P2);
 
     }
 
+    @Override
     public void play(){
 
         while (!othello.isGameOver()) {

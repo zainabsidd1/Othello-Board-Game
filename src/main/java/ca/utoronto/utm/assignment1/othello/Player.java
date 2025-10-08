@@ -1,13 +1,15 @@
 package ca.utoronto.utm.assignment1.othello;
 
+
+/**
+ * Abstract class
+ */
 public abstract class Player {
     protected Othello othello;
     protected char player;
 
     /**
-     *
-     * @param othello game being played
-     * @param player P1 or P2
+     * Create a new player for the current game
      */
     public Player(Othello othello, char player) {
         this.othello = othello;
