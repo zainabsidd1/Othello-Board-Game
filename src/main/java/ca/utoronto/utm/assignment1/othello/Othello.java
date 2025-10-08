@@ -123,7 +123,6 @@ public class Othello {
 	}
 
 
-
 	/**
 	 * run this to test the current class. We play a completely random game. DO NOT
 	 * MODIFY THIS!! See the assignment page for sample outputs from this.
