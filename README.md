@@ -1,7 +1,7 @@
 ## Othello Board Game 𖣯
 
 A console-based Othello (Reversi) engine built in Java, emphasizing encapsulation, 
-separation of concerns, and single responsibility. Handles the full game lifecycle — 
+separation of concerns, and single responsibility. Handles the full game lifecycle:
 move validation, disc flipping in all 8 directions, turn management, and endgame detection.
 
 ## OOP & OOD
@@ -12,12 +12,15 @@ leaking logic across classes. `Player` serves as an abstract base — `PlayerHum
 Adding a new AI strategy requires only a new subclass. `Move` encapsulates row/column 
 coordinates for clean, scalable move passing throughout the program.
 
-## How to run
-```bash
-mvn compile
-mvn exec:java -Dexec.mainClass="ca.utoronto.utm.assignment1.othello.OthelloControllerHumanVSGreedy"
-```
+OthelloBoard` manages the 8x8 board as a 2D character array, handling move validation 
+and flipping in all 8 directions. `Othello` drives the game loop, alternating turns 
+and automatically skipping a player if no valid moves exist. The game ends when neither 
+player can move, at which point discs are counted and a winner is declared.
 
-Replace `OthelloControllerHumanVSGreedy` with any matchup:
-`OthelloControllerHumanVSHuman`, `OthelloControllerHumanVSRandom`, 
-`OthelloControllerRandomVSGreedy`, or `OthelloControllerRandomVSRandom`.
+
+## How to run
+
+Open in any Java IDE (IntelliJ, Eclipse, VS Code) and run any of the controller 
+files directly: `OthelloControllerHumanVSHuman`, `OthelloControllerHumanVSGreedy`, 
+`OthelloControllerHumanVSRandom`, `OthelloControllerRandomVSGreedy`, 
+or `OthelloControllerRandomVSRandom`.
