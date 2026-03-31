@@ -7,7 +7,7 @@ move validation, disc flipping in all 8 directions, turn management, and endgame
 ## OOP & OOD
 
 The board state and game rules are fully contained within `OthelloBoard`, with no 
-leaking logic across classes. `Player` serves as an abstract base — `PlayerHuman`, 
+leaking logic across classes. `Player` serves as an abstract base; `PlayerHuman`, 
 `PlayerGreedy`, and `PlayerRandom` each extend it without touching the core engine. 
 Adding a new AI strategy requires only a new subclass. `Move` encapsulates row/column 
 coordinates for clean, scalable move passing throughout the program.
