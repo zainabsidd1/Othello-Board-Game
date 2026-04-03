@@ -1,6 +1,6 @@
 ## Othello Board Game 𖣯
 
-A console-based Othello (Reversi) engine built in Java, emphasizing encapsulation, 
+A console-based Othello (Reversi) engine built in Java, highlighting encapsulation, 
 separation of concerns, and single responsibility. Handles the full game lifecycle:
 move validation, disc flipping in all 8 directions, turn management, and endgame detection.
 
